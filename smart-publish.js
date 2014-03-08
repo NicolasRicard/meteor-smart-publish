@@ -166,9 +166,9 @@ Meteor.smartPublish = function(name, callback) {
         var activeItems = {};
         return {
           observer: c.observeChanges({
-            added:   function(id, fields) {activeItems[id] = 1;    smartAdded  (name, index, id, fields); },
-            changed: function(id, fields) {                        smartChanged(name, index, id, fields); },
-            removed: function(id)         {delete activeItems[id]; smartRemoved(name, index, id);         },
+            added:   function(id, fields) {activeItems[id] = 1; fields["_id"] = id;    smartAdded  (name, index, id, fields); },
+            changed: function(id, fields) {fields["_id"] = id;      smartChanged(name, index, id, fields); },
+            removed: function(id)         {delete activeItems[id];  smartRemoved(name, index, id);         },
           }),
           activeItems: activeItems,
           name: name,
